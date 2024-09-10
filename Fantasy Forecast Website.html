@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celtics Banner 18 :)</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .header {
+    background-color: #000;
+    border: 2px solid #FFFF; /* Black outline */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 100px;
+    padding-right: 100px;
+background-color: black;
+  }
+
+  .rectangle {
+    width: 350px; /* Adjust width */
+    height: 700px; /* Adjust height */
+/*    background-color: #fff;*/
+background-color: white;
+    border: 2px solid #000; /* Black outline */
+    margin-top: 300px; /* Adjust margin-top */
+    position: relative; /* To position text relative to the rectangle */
+  }
+
+  .player-name {
+    position: absolute;
+    bottom: 100%; /* Position relative to the top of the rectangle */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-bottom: 5px; /* Add margin to separate from the rectangle */
+  }
+
+  .search-bar {
+    text-align: center;
+    margin-bottom: 10px;
+height: 40px;
+Background-color: black;
+    display: inline-block; /* Change to inline-block */
+    margin-right: 10px; /* Add some margin between search bars */
+  }
+
+.wrapper {
+	display: flex;
+flex-direction: column;
+}
+
+  .search-bar input[type="text"],
+  .search-bar button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .search-bar button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  .search-left {
+    order: -1; /* Move the element to the beginning of the flex container */
+  }
+
+#center {
+	margin-top: 350px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Fantasy Basketball Comparison</h1>
+</div>
+
+<div class="container">
+<div class="wrapper">
+<div class="search-bar search-left">
+  <!-- Search Bar on the left side -->
+  <input type="text" placeholder="Search for player here..." />
+  <button type="submit">Search</button>
+</div>
+  <div class="rectangle">
+    <p class="player-name">Player Name</p>
+  </div>
+</div>
+<div class="wrapper">
+  <div id="center" class="rectangle">
+	    <p class="player-name">Stats</p>
+</div> <!-- Third rectangle -->
+</div>
+<div class="wrapper">
+<div class="search-bar search-left">
+  <!-- Search Bar on the right side -->
+  <input type="text" placeholder="Search for player here..." />
+  <button type="submit">Search</button>
+</div>
+  <div class="rectangle">
+    <p class="player-name">Player Name</p>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
+
+
+
+
