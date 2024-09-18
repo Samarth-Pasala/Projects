@@ -25,7 +25,7 @@ def main():
     """
     users_name = input("Please enter your name: ")
     first_string = "Hi " + users_name + ","
-    second_string = " welcome to the AirBNB NYC Database."
+    second_string = " welcome to AirBNB's New York Database."
     complete_statement = first_string + second_string
     print(complete_statement)
     air_bnb = DataSet()
@@ -418,7 +418,7 @@ if __name__ == "__main__":
 """
 --- sample run #1 ---
 Please enter your name: Samarth
-Hi Samarth, welcome to Foothill's database project.
+Hi Samarth, welcome to AirBNB's New York Database.
 Enter a header for the menu: AirBNB
 What is your home currency? USD
 Options for converting from USD:
