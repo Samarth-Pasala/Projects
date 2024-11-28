@@ -1,0 +1,8 @@
+Changes made to SoloRedGameModel class for this assignment:
+
+- changed the fields made from private to protected so they could be accessed in the
+  AdvancedSoloRedGameModel class.
+
+- Made private fields for gameWon and gameLost and updated them whenever the game
+  is supposed to be either won or lost (fixed an error I have been encountering since the model hw)
+
