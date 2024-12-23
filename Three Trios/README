@@ -1,0 +1,162 @@
+Overview: The Three Trios code implements a card game designed to be played by multiple players
+          potentially even an AI player. The objective of the game is to place cards on a grid
+          and battle opponents' cards based on predefined attack values. This implementation
+          manages the game state, player interactions, card placement, and
+          the resolution of battles, all while enforcing rules that ensure a smooth game
+          experience. Some high level assumptions that are made in the codebase are that the user
+          knows, to some extent, how the game works/is to be played. Furthermore, it is assumed
+          that the user knows the different elements to the game which are outlined in the code,
+          meaning that they understand that there are cards, cells, a grid, and players.
+
+Quick Start:
+   String gridFilePath = "BoardConfigs/(BoardConfiguration))"; --> Initialize a grid to play on
+   String cardsFilePath = "BoardConfigs/(CardConfiguration)"; --> Initialize cards to play with
+   ThreeTriosGame game = initializeGame(gridFilePath, cardsFilePath, new Random()); --> initialize
+   game.startGame(); --> start the game
+   Player redPlayer = game.getCurrentPlayer(); --> set the current player to red
+   game.placeCard(0, 0, 0) --> place a card, and then the next player can play
+
+   OR
+
+   Simply use the newly created gameInitializer class, which contains all of the code necessary to
+   create a new game using the configuration files for the grid and cards.
+
+       String gridFilePath = "BoardConfigs/BoardWithHoles3x3";
+       String cardsFilePath = "BoardConfigs/EnoughCards";
+       GameInitializer initialize = new GameInitializer();
+
+       ThreeTriosGame model = initialize.initializeGame(gridFilePath, cardsFilePath, new Random());
+
+       GUIView view = new GUIView(model); --> if you want to show the GUI view
+       view.setVisible(true); --> if you want to show the GUI view
+
+Key Components:
+    BoardConfigs --> This directory represents various board and card configurations for the game.
+                     Some of the boards/cards are valid, meaning they can be used to play the game
+                     properly, while other's are not valid for various reasons that don't abide
+                     to the game rules. Based on which board/card configurations are chosen, it is
+                     driven by the game logic, either playing the game properly or throwing some
+                     type of error.
+    Model --> This package contains all of the core game logic, enforcing the rules, player turns,
+              battle mechanics, and the overall control flow by managing the overall game state.
+              This model contains the class that drives the overall game, communicating with
+              various helper classes to ensure that the game rules are enforced.
+    ThreeTriosModel --> The interface drives the control flow of the game.
+                        It controls the flow by communicating between the game state/grid, and the
+                        players. This class is used to store the core/main logic for the game, such
+                        as the rules, player turns, card placement, battle mechanics, etc.
+    Controller --> package that contains all of the interfaces and classes that are needed for
+                   the model, view, and player actions to interact with one another. They help
+                   to coordinate the game flow, listen for events from the view and players in
+                   the game, and update the model based on the events.
+    View --> This package contains the textual view of the game board/state for the player's to
+             visualize the game they are playing, showing both the board and the hand that can
+             be played from. Additionally, it contains the visual GUI for the users to visualize
+             the grid that is being played to, as well as the cards they each have in their hands.
+             The view is driven from the model because it pulls from the game logic to display the
+             initial and updated boards to the user based on the game state.
+
+Key SubComponents:
+    Card --> Represents the individual cards that players can use to play to the grid. This
+             component is driven by ThreeTriosGame because that class manages the instances of a
+             card and invokes its methods to manipulate the game.
+    Cell --> Represents a single location within the grid, and checks to ensure that the location
+             isn't a hole or a card isn't already occupying the location. This component is driven
+             by the Grid because it uses the cells to properly manage the layout. Furthermore,
+             ThreeTriosGame iterates through the cells to ensure the game logic is followed.
+    Grid --> Represents the game board being played to, and ensures that everything is accurate
+             before the game begins. This is driven by ThreeTriosGame as the class uses it to
+             validate the placement of cards and to access the updated cell information.
+    Player --> Represents the players playing the game, including the color and the cards contained
+               in their deck. This is driven by ThreeTriosGame because it utilizes the player
+               information to get the player interactions with the game/board, and update their
+               information accordingly.
+
+Source Organization:
+    HW5 --> Contains this README file and the file for the potential interaction between player and
+            AI. Also contains all of the below directories/packages.
+    BoardConfigs --> Provides sample board and card configurations for the game. Used to test
+                     various scenarios for the game.
+    src
+        cs3500.threetrios --> Contains a main class/method to print out the view to the terminal to
+                              ensure the view was rendered properly.
+            model --> Contains all of the methods needed for the game logic to be programmed
+                      according to the rules of the game.
+            controller --> contains alls interfaces and methods needed for the various packages
+                           to interact/communicate with one another.
+            view --> Contains the class for the graphical user interface and the
+                     textual view of the game for the player to view.
+    test
+        cs3500.threetrios --> contains tests for all the publicly visible methods contained in the
+                              main game class.
+        model --> contains tests for the "helper classes" that help to drive the control flow
+                  of the main game class. Also contains tests to ensure that the strategies are
+                  functioning properly with the correct logic.
+        view --> contains tests for the view to ensure that it is rendering properly to the player.
+
+
+ Changes for Part 2:
+
+    - ThreeTriosGame
+        - getCell() --> Gets the contents of a cell at a given coordinate, which was previously
+                        missing due to relying on getting the rows and columns to find the
+                        position of the card.
+        - getPlayerScore() --> Puts a scoring mechanism in place for the game. The previous assignment
+                               didn't specify a particular scoring system, but this assignment does,
+                               so this method was added to ensure the score was calculated properly.
+        - getPlayerHand() --> Gets the contents in the player hand. Implemented the functionality
+                              mainly for the view
+        - getOtherPlayer() --> gets the hand of the other player in the game, meaning that it isn't
+                               their move to play to the grid. Implemented the function in order
+                               to get the functionality of removing cards from the player's hand in
+                               the GUI view to function properly.
+    - Change in GridImpl
+        - copy() --> implements the ability to create a copy of the grid for the game.
+
+    - GameInitializer Class
+        - A class that implements the ability to create a game using the configuration files
+          for the grid and the cards. Previously, we initialized this information in the test
+          classes, but by now implementing it in the model package itself, we are able to
+          set up in an simpler manner. Additionally, implementing this class made it easier for the
+          model and view to interact with one another.
+
+Changes for Part 3:
+
+model package changes:
+    - Strategies interface --> used so that a specific strategy can be called at any time
+                                         from one method. Mostly for the AIPlayer usage.
+    - Abstract Strategies class --> abstracts out a helper method for the ThreeTriosStrategies to
+                                    remove duplicate code.
+    - FlipMaxCardsStrategy class --> puts strategy one logic in its own class so that an AI player
+                                     is able to use it when called for playing the game.
+    - ChooseCornerStrategy class --> puts strategy two logic in its own class so that an AI player
+                                     is able to use it when called for playing the game.
+
+    - ThreeTriosGame changes:
+        - addModelStateListener() --> maintains a list of listeners to notify whenever a game state
+                                      change occurs.
+        - notifyModelStateChanges() --> whenever the model's state changes (when a player moves),
+                                        the listeners are notified.
+        - addTurnListener() --> allows PlayerTurnListener objects to register themselves with the
+                                model. This allows the model to notify the listeners when a new
+                                player turn begins.
+        - notifyTurnChange() --> called whenever the current player changes. Just a precaution
+                                 so that the game/players always know who's turn it is.
+
+    - PlayerImpl class changes:
+        - addActionListener() --> establishes a relationship between the player and controller.
+                                  Player notifies controller when it needs to perform actions.
+        - notifyTurn() --> called via the model to inform the player that it is their turn. The
+                           player reaction is based on whether they are a human player or AI
+                           player.
+
+Command-Line Configurations:
+
+Human vs. Human: HumanPlayer HumanPlayer
+AI vs. AI: FlipMaxCardsStrategy ChooseCornerStrategy
+Human vs. AI: HumanPlayer ChooseCornerStrategy
+
+Opening Jar file in terminal:
+
+java -jar HW5.jar HumanPlayer HumanPlayer
+

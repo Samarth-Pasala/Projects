@@ -1,0 +1,10 @@
+For the extra credit, we were able to implement level 0 and level 1 completely. We also wrote the
+necessary configurations to run with the various rules for level 1.
+
+File that were changed:
+--> New rules package inside model package with BattleRule interface, and StandardRule, ReverseRule,
+FallenAceRule, and CombineRules classes with the different implementations for the levels.
+--> The ThreeTriosMain was changed to account for these various rules
+--> HintDecorator interface and HintDecorator class added to the view package for level 0 implementation
+--> Added to the GUIView class to add the decorator constructors and implementation to actually
+display the button for toggling hints and displaying the number of possible flips on the grid cells.
